@@ -6,43 +6,29 @@
 
 /**
  * Elementor Form Field - Date picker
- *
  * Add a new "Date picker" field to Elementor form widget.
- *
  */
 class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Field_Base {
-
 	/**
-	 * Get field type.
-	 *
-	 * Retrieve local-tel field unique ID.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return string Field type.
-	 */
-
+	  * Adding the flatpickr to use the native validation
+	*/
 	public $depended_scripts = [
 		'flatpickr',
 	];
-
 	public $depended_styles = [
 		'flatpickr',
 	];
 
+	/**
+	 * Get field type.
+	*/
 	public function get_type() {
 		return 'date-picker';
 	}
 
 	/**
 	 * Get field name.
-	 *
-	 * Retrieve date-picker field label.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return string Field name.
-	 */
+	*/
 	public function get_name() {
 		return esc_html__( 'Date Picker', 'elementor-form-date-picker-field' );
 	}
@@ -51,13 +37,7 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 	 * Render field output on the frontend.
 	 *
 	 * Written in PHP and used to generate the final HTML.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @param mixed $item
-	 * @param mixed $item_index
-	 * @param mixed $form
-	 * @return void
+	 * To use some native scripts to date, elementor uses css classes (example: elementor-date-field)
 	 */
 	public function render( $item, $item_index, $form ) {
 		$form_id = $form->get_id();
@@ -83,13 +63,6 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 	 * Field validation.
 	 *
 	 * Validate date-picker field value to ensure it complies to certain rules.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @param \ElementorPro\Modules\Forms\Classes\Field_Base   $field
-	 * @param \ElementorPro\Modules\Forms\Classes\Form_Record  $record
-	 * @param \ElementorPro\Modules\Forms\Classes\Ajax_Handler $ajax_handler
-	 * @return void
 	 */
 	public function validation( $field, $record, $ajax_handler ) {
 		if ( empty( $field['value'] ) ) {
@@ -100,11 +73,10 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 	/**
 	 * Update form widget controls.
 	 *
-	 * Add input fields to allow the user to customize the date picker field.
+	 * Add data input fields minimum and data maximum to allow the user to set the date picker field between to values.
 	 */
 	public function update_controls( $widget ) {
 		$elementor = \ElementorPro\Plugin::elementor();
-
 		$control_data = $elementor->controls_manager->get_control_from_stack( $widget->get_unique_name(), 'form_fields' );
 
 		if ( is_wp_error( $control_data ) ) {
@@ -144,6 +116,9 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 			], 
 		];
 
+		/**
+		 * Add placeholder to  
+		*/
 		foreach ( $control_data['fields'] as $index => $field ) {
 			if ( 'placeholder' !== $field['name'] ) {
 				continue;
