@@ -49,8 +49,9 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 			'input' . $item_index,
 			[
 				'class' => 'elementor-field-textual',
-				'for' => $form_id . $item_index,		
-				'title' => esc_html__( 'Format: dd-mm-YYYY', 'elementor-form-date-picker-field' ),
+				'for' => $form_id . $item_index,
+				'inputmode' => 'numeric',	
+				'title' => esc_html__( 'Format: aaaa-mm-dd', 'elementor-form-date-picker-field' ),
 				'min' => $item['data_min'],
 				'max' => $item['data_max']
 			]
@@ -67,7 +68,7 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 	public function validation( $field, $record, $ajax_handler ) {
 		if ( empty( $field['value'] ) ) {
 			return;
-		}		
+		}
 	}
 
 	/**
@@ -117,7 +118,7 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 		];
 
 		/**
-		 * Add placeholder to  
+		 * Add default fields from elementor, such as placeholder
 		*/
 		foreach ( $control_data['fields'] as $index => $field ) {
 			if ( 'placeholder' !== $field['name'] ) {
@@ -139,13 +140,9 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 	}
 
 	/**
-	 * Field constructor.
+	 * Default function: Field constructor. Default function
 	 *
 	 * Used to add a script to the Elementor editor preview.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return void
 	 */
 	public function __construct() {
 		parent::__construct();
@@ -153,14 +150,10 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 	}
 
 	/**
-	 * Elementor editor preview.
+	 * Default function: Elementor editor preview.
 	 *
 	 * Add a script to the footer of the editor preview screen.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return void
-	 */
+	*/
 	public function editor_preview_footer() {
 		add_action( 'wp_footer', [ $this, 'content_template_script' ] );
 	}
@@ -168,14 +161,10 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 	/**
 	 * Content template script.
 	 *
-	 * Add content template alternative, to display the field in Elemntor editor.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return void
+	 * Add content template alternative, to display the field in Elementor editor.
 	 */
 	public function content_template_script() {
-		?>
+	?>
 		<script>
 		jQuery( document ).ready( () => {
 
@@ -186,7 +175,7 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 					const fieldId    = `form_field_${i}`;
 					const fieldClass = `elementor-field-textual elementor-field ${item.css_classes}`;
 					const pattern    = '[0-9]{4}-[0-9]{2}-[0-9]{2}';
-					const title      = "<?php echo esc_html__( 'Format: dd/mm/YYYY', 'elementor-forms-date-picker-field' ); ?>";
+					const title      = "<?php echo esc_html__( 'Format: aaaa-mm-dd', 'elementor-forms-date-picker-field' ); ?>";
 
 					return `<input 
 								id="${fieldId}" 
