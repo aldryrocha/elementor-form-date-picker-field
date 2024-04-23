@@ -13,17 +13,17 @@ It's developed by [@aldryrocha](https://github.com/aldryrocha) for the [EQI Inve
 
 ## Installation
 
- Recommend:
+Recommend:
 - Wordpress: Version tested up to 6.0
 - Plugin Elementor: Version tested up to 3.21.1
 - Plugin Elementor Pro: Version tested up to 3.20.0
 - Theme Hello-Elementor: Version tested up to 3.0.1
 
-To install You need to download this repo and place it in the `/wp-content/plugins/` or uploud the zip on the `Admin panel > Plugins > Add plugins > Uploud plugin` and active.
+To install You need to download this repo and place it in the `/wp-content/plugins/` or upload the zip on the `Admin panel > Plugins > Add plugins > Upload plugin` and active.
 
 ### Usage
 
-Then go to a page and add a `Form > add a field type Date Picker`.
+Go to a page and add a `Form > add a field type: "Date Picker"`.
 
 ## Thanks to
 Developers who created the [Elementor documentation](https://developers.elementor.com/docs/form-fields/).
