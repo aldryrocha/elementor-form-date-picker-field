@@ -24,11 +24,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param \ElementorPro\Modules\Forms\Registrars\Form_Fields_Registrar $form_fields_registrar
  * @return void
  */
-function add_new_form_field( $form_fields_registrar ) {
+function add_new_date_picker_field( $form_fields_registrar ) {
 
 	require_once( __DIR__ . '/form-fields/date-picker.php' );
 
 	$form_fields_registrar->register( new \Elementor_Date_Picker_Field() );
 
 }
-add_action( 'elementor_pro/forms/fields/register', 'add_new_form_field' );
+add_action( 'elementor_pro/forms/fields/register', 'add_new_date_picker_field' );
