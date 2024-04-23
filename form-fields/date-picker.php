@@ -57,12 +57,10 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 		$form->add_render_attribute(
 			'input' . $item_index,
 			[
-				//'size' => '1',
 				'class' => 'elementor-field-textual',
 				'for' => $form_id . $item_index,
 				'type' => 'date',
-				'placeholder' => $item['date-picker-placeholder'],
-				'pattern' => '[0-9]{4}-[0-9]{2}-[0-9]{2}',
+				'pattern' => '[0-9]{4}-[0-9]{2}-[0-9]{2}',			
 				'title' => esc_html__( 'Format: dd-mm-YYYY', 'elementor-form-date-picker-field' ),
 			]
 		);
@@ -87,10 +85,10 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 			return;
 		}
 
-		/* if ( preg_match( '/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/', $field['value'] ) !== 1 ) {
+		/* if ( preg_match( '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $field['value'] ) !== 1 ) {
 			$ajax_handler->add_error(
 				$field['id'],
-				esc_html__( 'Phone number must be in "123-456-7890" format.', 'elementor-form-local-tel-field' )
+				esc_html__( 'Date must be in "dd/mm/YYYY" format.', 'elementor-form-date-picker-field' )
 			);
 		} */
 	}
@@ -115,25 +113,10 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 		}
 
 		$field_controls = [
-			'date-picker-placeholder' => [
-				'name' => 'date-picker-placeholder',
-				'label' => esc_html__( 'Date Picker Placeholder', 'elementor-form-date-picker-field' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => 'dd/mm/YYYY',
-				'dynamic' => [
-					'active' => true,
-				],
-				'condition' => [
-					'field_type' => $this->get_type(),
-				],
-				'tab'          => 'content',
-				'inner_tab'    => 'form_fields_content_tab',
-				'tabs_wrapper' => 'form_fields_tabs',
-			],
-			/*'min_date' => [
-				'name' => 'min_date',
-				'label' => esc_html__( 'Min. Date', 'elementor-pro' ),
-				'type' => Controls_Manager::DATE_TIME,
+			'data_min' => [
+				'name' => 'data_min',
+				'label' => esc_html__( 'Data Min.', 'elementor-form-date-picker-field' ),
+				'type' => \Elementor\Controls_Manager::DATE_TIME,
 				'condition' => [
 					'field_type' => $this->get_type(),
 				],
@@ -145,10 +128,10 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 				'inner_tab' => 'form_fields_content_tab',
 				'tabs_wrapper' => 'form_fields_tabs',
 			],
-			'max_date' => [
-				'name' => 'max_date',
-				'label' => esc_html__( 'Max. Date', 'elementor-pro' ),
-				'type' => Controls_Manager::DATE_TIME,
+			'data_max' => [
+				'name' => 'data_max',
+				'label' => esc_html__( 'Data Máx.', 'elementor-form-date-picker-field' ),
+				'type' => \Elementor\Controls_Manager::DATE_TIME,
 				'condition' => [
 					'field_type' => $this->get_type(),
 				],
@@ -159,8 +142,22 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 				'tab' => 'content',
 				'inner_tab' => 'form_fields_content_tab',
 				'tabs_wrapper' => 'form_fields_tabs',
-			], */
+			], 
 		];
+
+		foreach ( $control_data['fields'] as $index => $field ) {
+			if ( 'placeholder' !== $field['name'] ) {
+				continue;
+			}
+			foreach ( $field['conditions']['terms'] as $condition_index => $terms ) {
+				if ( ! isset( $terms['name'] ) || 'field_type' !== $terms['name'] || ! isset( $terms['operator'] ) || 'in' !== $terms['operator'] ) {
+					continue;
+				}
+				$control_data['fields'][ $index ]['conditions']['terms'][ $condition_index ]['value'][] = $this->get_type();
+				break;
+			}
+			break;
+		}
 
 		$control_data['fields'] = $this->inject_field_controls( $control_data['fields'], $field_controls );
 
@@ -214,12 +211,16 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 					const fieldType    = 'date';
 					const fieldId    = `form_field_${i}`;
 					const fieldClass = `elementor-field-textual elementor-field ${item.css_classes}`;
-					//const size       = '1';
 					const pattern    = '[0-9]{4}-[0-9]{2}-[0-9]{2}';
-					const placeholder  = item['date-picker-placeholder'];
 					const title      = "<?php echo esc_html__( 'Format: dd/mm/YYYY', 'elementor-forms-date-picker-field' ); ?>";
 
-					return `<input id="${fieldId}" type="${fieldType}" class="${fieldClass}" pattern="${pattern}" placeholder="${placeholder}" title="${title}">`;
+					return `<input 
+								id="${fieldId}" 
+								type="${fieldType}" 
+								class="${fieldClass}" 
+								pattern="${pattern}" 
+								title="${title}"
+							>`;
 				}, 10, 3
 			);
 
