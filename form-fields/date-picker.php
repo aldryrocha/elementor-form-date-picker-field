@@ -22,6 +22,14 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 	 * @return string Field type.
 	 */
 
+	public $depended_scripts = [
+		'flatpickr',
+	];
+
+	public $depended_styles = [
+		'flatpickr',
+	];
+
 	public function get_type() {
 		return 'date-picker';
 	}
@@ -54,14 +62,17 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 	public function render( $item, $item_index, $form ) {
 		$form_id = $form->get_id();
 
+		$form->add_render_attribute( 'input' . $item_index, 'class', 'elementor-field-textual elementor-date-field' );
+		$form->add_render_attribute( 'input' . $item_index, 'pattern', '[0-9]{4}-[0-9]{2}-[0-9]{2}' );
+
 		$form->add_render_attribute(
 			'input' . $item_index,
 			[
 				'class' => 'elementor-field-textual',
-				'for' => $form_id . $item_index,
-				'type' => 'date',
-				'pattern' => '[0-9]{4}-[0-9]{2}-[0-9]{2}',			
+				'for' => $form_id . $item_index,		
 				'title' => esc_html__( 'Format: dd-mm-YYYY', 'elementor-form-date-picker-field' ),
+				'min' => $item['data_min'],
+				'max' => $item['data_max']
 			]
 		);
 
@@ -83,25 +94,13 @@ class Elementor_Date_Picker_Field extends \ElementorPro\Modules\Forms\Fields\Fie
 	public function validation( $field, $record, $ajax_handler ) {
 		if ( empty( $field['value'] ) ) {
 			return;
-		}
-
-		/* if ( preg_match( '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $field['value'] ) !== 1 ) {
-			$ajax_handler->add_error(
-				$field['id'],
-				esc_html__( 'Date must be in "dd/mm/YYYY" format.', 'elementor-form-date-picker-field' )
-			);
-		} */
+		}		
 	}
 
 	/**
 	 * Update form widget controls.
 	 *
 	 * Add input fields to allow the user to customize the date picker field.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @param \Elementor\Widget_Base $widget The form widget instance.
-	 * @return void
 	 */
 	public function update_controls( $widget ) {
 		$elementor = \ElementorPro\Plugin::elementor();
