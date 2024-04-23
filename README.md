@@ -14,10 +14,10 @@ It's developed by [@aldryrocha](https://github.com/aldryrocha) for the [EQI Inve
 ## Installation
 
 Recommend:
-- Wordpress: Version tested up to 6.0
-- Plugin Elementor: Version tested up to 3.21.1
-- Plugin Elementor Pro: Version tested up to 3.20.0
-- Theme Hello-Elementor: Version tested up to 3.0.1
+- Wordpress: Version 6.0 and above
+- Plugin Elementor: Version 3.21.1 and above
+- Plugin Elementor Pro: Version 3.20.0 and above
+- Theme Hello-Elementor: Version 3.0.1 and above
 
 To install You need to download this repo and place it in the `/wp-content/plugins/` or upload the zip on the `Admin panel > Plugins > Add plugins > Upload plugin` and active.
 
