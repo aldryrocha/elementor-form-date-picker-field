@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name: Elementor Forms - Date Picker Field
+ * Plugin Name: Elementor Forms: Date Picker Field
  * Description: Custom addon that adds a "date picker" field to Elementor Forms Widget, let you select a possible date range.
  * Plugin URI:  
  * Version:     1.0.0
  * Author:      Aldry Rocha
  * Author URI:  
- * Text Domain: elementor-form-local-teldate-picker-field
+ * Text Domain: elementor-form-date-picker-field
  *
  * Requires Plugins: elementor Pro
  * Elementor tested up to: 3.21.1
@@ -19,10 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Add new `date-picker` field to Elementor form widget.
- *
- * @since 1.0.0
- * @param \ElementorPro\Modules\Forms\Registrars\Form_Fields_Registrar $form_fields_registrar
- * @return void
  */
 function add_new_date_picker_field( $form_fields_registrar ) {
 
